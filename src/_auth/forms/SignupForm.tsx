@@ -23,6 +23,9 @@ import { useCreateUserAccount, useSignInAccount } from '@/lib/react-query/querie
 const SignupForm = () => {
     const { toast } = useToast();
     const { mutateAsync, createUserAccount, isLoading: isCreatingAccount } = useCreateUserAccount();
+
+    const navigate = useNavigate();
+    const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
     
     const { mutateAsync: signInAccount, isLoading: isSigningIn } = useSignInAccount();
 
@@ -53,6 +56,18 @@ const SignupForm = () => {
         });
 
         if(!session) {
+            return toast({
+                title: "Sign in failed. Please try again!"
+              })
+        }
+
+        const isLoggedIn = await checkAuthUser();
+
+        if(isLoggedIn) {
+            form.reset();
+
+            navigate('/');
+        } else {
             return toast({
                 title: "Sign in failed. Please try again!"
               })
