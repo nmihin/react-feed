@@ -1,33 +1,35 @@
-import React from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import './globals.css'
-import SigninForm from './_auth/forms/SigninForm'
-import Home from './_root/pages/Home'
-import SignupForm from './_auth/forms/SignupForm'
-import AuthLayout from './_auth/AuthLayout'
-import RootLayout from './_root/RootLayout'
-import { Toaster } from "@/components/ui/toaster"
+import { Routes, Route } from "react-router-dom";
+
+import {
+  Home
+} from "@/_root/pages";
+import AuthLayout from "./_auth/AuthLayout";
+import RootLayout from "./_root/RootLayout";
+import SignupForm from "@/_auth/forms/SignupForm";
+import SigninForm from "@/_auth/forms/SigninForm";
+import { Toaster } from "@/components/ui/toaster";
+
+import "./globals.css";
 
 const App = () => {
   return (
-    <main className='flex h-screen'>
-            <Router>
-                <Routes>
-                {/*PUBLIC*/}
-                <Route element={<AuthLayout />}>
-                    <Route path="/sign-in" element={<SigninForm />} />
-                    <Route path="/sign-up" element={<SignupForm />} />
-                </Route>
+    <main className="flex h-screen">
+      <Routes>
+        {/* public routes */}
+        <Route element={<AuthLayout />}>
+          <Route path="/sign-in" element={<SigninForm />} />
+          <Route path="/sign-up" element={<SignupForm />} />
+        </Route>
 
-                {/*PRIVATE*/}
-                <Route element={<RootLayout />}>
-                    <Route index element={<Home />} />
-                </Route>
-                </Routes>
-            </Router>
-    <Toaster />
+        {/* private routes */}
+        <Route element={<RootLayout />}>
+          <Route index element={<Home />} />
+        </Route>
+      </Routes>
+
+      <Toaster />
     </main>
-  )
-}
+  );
+};
 
-export default App
+export default App;
