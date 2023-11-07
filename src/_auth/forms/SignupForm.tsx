@@ -29,7 +29,9 @@ const SignupForm = () => {
   });
 
   // Queries
+  // @ts-ignore
   const { mutateAsync: createUserAccount, isLoading: isCreatingAccount } = useCreateUserAccount();
+  // @ts-ignore
   const { mutateAsync: signInAccount, isLoading: isSigningInUser } = useSignInAccount();
 
   // Handler
@@ -143,8 +145,8 @@ const SignupForm = () => {
             )}
           />
 
-          <Button type="submit" className="shad-button_primary">
-            {isCreatingAccount || isSigningInUser || isUserLoading ? (
+          <Button type="submit" className="shad-button_primary" disabled={form.formState.isSubmitting || isCreatingAccount || isSigningInUser || isUserLoading}>
+            {form.formState.isSubmitting || isCreatingAccount || isSigningInUser || isUserLoading ? (
               <div className="gap-2 flex-center">
                 <Loader /> Loading...
               </div>
@@ -152,6 +154,7 @@ const SignupForm = () => {
               "Sign Up"
             )}
           </Button>
+
 
           <p className="mt-2 text-center text-small-regular text-light-2">
             Already have an account?

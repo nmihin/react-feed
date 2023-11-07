@@ -14,5 +14,7 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    // Add an exception to allow the 'isLoading' property
+    '@typescript-eslint/no-unused-vars': ['warn', { args: 'none' }],
   },
 }

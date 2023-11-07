@@ -1,8 +1,8 @@
-import React from 'react'
+
 import { useEffect } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
-import { Button } from "../ui/button";
+
 import { useUserContext } from "@/context/AuthContext";
 import { useSignOutAccount } from "@/lib/react-query/queriesAndMutations";
 import { INavLink } from '@/types';
@@ -12,7 +12,8 @@ import { sidebarLinks } from '@/constants';
 const LeftSidebar = () => {
     const navigate = useNavigate();
     const { user } = useUserContext();
-    const { mutate: signOut, isSuccess } = useSignOutAccount();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { isSuccess } = useSignOutAccount();
     const { pathname } = useLocation();
 
     useEffect(() => {
