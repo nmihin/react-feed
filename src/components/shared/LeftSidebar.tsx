@@ -2,17 +2,17 @@
 import { useEffect } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
-
 import { useUserContext } from "@/context/AuthContext";
 import { useSignOutAccount } from "@/lib/react-query/queriesAndMutations";
 import { INavLink } from '@/types';
 import { sidebarLinks } from '@/constants';
+import { signOutAccount } from "@/lib/appwrite/api";
+import { Button } from "../ui/button";
 
 
 const LeftSidebar = () => {
     const navigate = useNavigate();
     const { user } = useUserContext();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { isSuccess } = useSignOutAccount();
     const { pathname } = useLocation();
 
@@ -69,6 +69,13 @@ const LeftSidebar = () => {
                 })}
                 </ul>
             </div>
+
+            <Button variant="ghost"
+                className="shad-button_ghost" onClick={()=>signOutAccount()}
+            >
+                <img src="/assets/icons/logout.svg" alt="logout" />
+                <p className="small-medium lg:base-medium">Logout</p>
+            </Button>
         </nav>
     )
 }

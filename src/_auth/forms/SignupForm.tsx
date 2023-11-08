@@ -29,16 +29,13 @@ const SignupForm = () => {
   });
 
   // Queries
-  // @ts-ignore
   const { mutateAsync: createUserAccount, isLoading: isCreatingAccount } = useCreateUserAccount();
-  // @ts-ignore
   const { mutateAsync: signInAccount, isLoading: isSigningInUser } = useSignInAccount();
 
   // Handler
   const handleSignup = async (user: z.infer<typeof SignupValidation>) => {
     try {
       const newUser = await createUserAccount(user);
-
       if (!newUser) {
         toast({ title: "Sign up failed. Please try again.", });
         
@@ -53,7 +50,8 @@ const SignupForm = () => {
       if (!session) {
         toast({ title: "Something went wrong. Please login your new account", });
         
-        navigate("/sign-in");
+        console.log(newUser)
+        //navigate("/sign-in");
         
         return;
       }
