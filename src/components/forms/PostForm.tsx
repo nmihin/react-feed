@@ -15,24 +15,27 @@ import {
 import { Input } from "@/components/ui/input"
 import { Textarea } from "../ui/textarea"
 import FileUploader from "../shared/FileUploader"
+import { PostValidation } from "@/lib/validation"
+import { Models } from "appwrite"
 
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-})
+type PostFormProps = {
+  post?: Models.Document
+}
    
-const PostForm = () => {
+const PostForm = ({post}: PostFormProps) => {
     // 1. Define your form.
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<z.infer<typeof PostValidation>>({
+        resolver: zodResolver(PostValidation),
         defaultValues: {
-            username: "",
+            caption: post ? post?.caption : '',
+            file: [],
+            location: post ? post?.location : '',
+            tags: post ? post?.tags.join(',') : ''
         },
     })
     
     // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    function onSubmit(values: z.infer<typeof PostValidation>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
@@ -43,7 +46,7 @@ const PostForm = () => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-9 w-full max-w-5xl">
           <FormField
             control={form.control}
-            name="username"
+            name="caption"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="shad-form_label">Caption</FormLabel>
@@ -59,12 +62,15 @@ const PostForm = () => {
           />
           <FormField
             control={form.control}
-            name="username"
+            name="file"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="shad-form_label">Files</FormLabel>
+                <FormLabel className="shad-form_label">Add Photos</FormLabel>
                 <FormControl>
-                  <FileUploader></FileUploader>
+                  <FileUploader
+                    fieldChange={field.onChange}
+                    mediaUrl={post?.imageUrl}
+                  ></FileUploader>
                 </FormControl>
                 <FormDescription>
                   This is your public display name.
@@ -75,12 +81,12 @@ const PostForm = () => {
           />
           <FormField
             control={form.control}
-            name="username"
+            name="location"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="shad-form_label">Add Location</FormLabel>
                 <FormControl>
-                  <Input type="text" className="shad-input" />
+                  <Input type="text" className="shad-input" {...field} />
                 </FormControl>
                 <FormDescription>
                   This is your public display name.
@@ -91,12 +97,12 @@ const PostForm = () => {
           />
           <FormField
             control={form.control}
-            name="username"
+            name="tags"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="shad-form_label">Add Tags (separated by comma " , ")</FormLabel>
                 <FormControl>
-                  <Input type="text" className="shad-input" placeholder="Art, Expression, Learning, etc." />
+                  <Input type="text" {...field} className="shad-input" placeholder="Art, Expression, Learning, etc." />
                 </FormControl>
                 <FormDescription>
                   This is your public display name.
