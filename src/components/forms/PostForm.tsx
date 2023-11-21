@@ -27,7 +27,7 @@ type PostFormProps = {
 }
    
 const PostForm = ({post}: PostFormProps) => {
-    const { mutateAsync: createPost, isPending: isLoadingCreate } = useCreatePost();
+    const { mutateAsync: createPost } = useCreatePost();
     const { user } = useUserContext();
     const { toast } = useToast();
     const navigate = useNavigate();
@@ -61,7 +61,7 @@ const PostForm = ({post}: PostFormProps) => {
 
     return (
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-9 w-full max-w-5xl">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col w-full max-w-5xl gap-9">
           <FormField
             control={form.control}
             name="caption"
@@ -129,7 +129,7 @@ const PostForm = ({post}: PostFormProps) => {
               </FormItem>
             )}
           />
-          <div className="flex gap-4 items-center justify-end">
+          <div className="flex items-center justify-end gap-4">
             <Button type="submit" className="shad-button_dark_4">Cancel</Button>
             <Button type="submit" className="shad-button_primary whitespace-nowrap">Submit</Button>
           </div>

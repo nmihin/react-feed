@@ -2,7 +2,6 @@ import { ID, Query } from "appwrite";
 
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
 import { IUpdatePost, INewPost, INewUser, IUpdateUser } from "@/types";
-import { Client, Account, Databases, Storage, Avatars } from "appwrite";
 
 // ============================================================
 // AUTH
@@ -72,37 +71,6 @@ export async function signInAccount(user: { email: string; password: string }) {
 
 // ============================== GET ACCOUNT
 export async function getAccount() {
-  const client = new Client();
-
-  const account = new Account(client);
-  client
-    .setEndpoint("https://cloud.appwrite.io/v1")
-    .setProject("6540f20ccdc71cfcafa0");
-
-  const currentSession = account.getSession("current");
-  currentSession.then(
-    function (response) {
-      console.log(response);
-    },
-    function (error) {
-      console.log(error);
-    }
-  );
-
-  /*
-  const promise = account.get();
-
-  promise.then(
-    function (response) {
-      console.log(response); // Success
-    },
-    function (error) {
-      console.log(error); // Failure
-    }
-  );
-  */
-
-  /*
   try {
     const currentAccount = await account.get();
 
@@ -110,7 +78,6 @@ export async function getAccount() {
   } catch (error) {
     console.log(error);
   }
-  */
 }
 
 // ============================== GET USER

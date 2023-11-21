@@ -16,7 +16,7 @@ import { useUserContext } from "@/context/AuthContext";
 const SignupForm = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
+  const { checkAuthUser } = useUserContext();
 
   const form = useForm<z.infer<typeof SignupValidation>>({
     resolver: zodResolver(SignupValidation),
@@ -29,8 +29,8 @@ const SignupForm = () => {
   });
 
   // Queries
-  const { mutateAsync: createUserAccount, isLoading: isCreatingAccount } = useCreateUserAccount();
-  const { mutateAsync: signInAccount, isLoading: isSigningInUser } = useSignInAccount();
+  const { mutateAsync: createUserAccount } = useCreateUserAccount();
+  const { mutateAsync: signInAccount } = useSignInAccount();
 
   // Handler
   const handleSignup = async (user: z.infer<typeof SignupValidation>) => {
@@ -143,8 +143,8 @@ const SignupForm = () => {
             )}
           />
 
-          <Button type="submit" className="shad-button_primary" disabled={form.formState.isSubmitting || isCreatingAccount || isSigningInUser || isUserLoading}>
-            {form.formState.isSubmitting || isCreatingAccount || isSigningInUser || isUserLoading ? (
+          <Button type="submit" className="shad-button_primary" disabled={form.formState.isSubmitting}>
+            {form.formState.isSubmitting ? (
               <div className="gap-2 flex-center">
                 <Loader /> Loading...
               </div>
